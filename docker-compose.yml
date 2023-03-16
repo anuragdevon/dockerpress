@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+
+  php:
+    build: ./php
+    volumes:
+      - ./wordpress:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    build: ./mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password
+volumes:
+  mysql_data:
+  
